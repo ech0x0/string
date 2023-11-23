@@ -251,6 +251,46 @@ string operator+(const char lhs, string&& rhs) {
     return str;
 }
 
+char string::operator[](const size_t i) const {
+    return *(m_str + i);
+}
+
+bool operator<(const string& lhs, const string& rhs) {
+    if (lhs.size() == rhs.size()) {
+        for (size_t i = lhs.size() - 1; i >= 0; --i) {
+            if (lhs[i] == rhs[i]) continue;
+            return lhs[i] < rhs[i];
+        }
+    }
+    return lhs.size() < rhs.size();
+}
+
+bool operator==(const string& lhs, const string& rhs) {
+    if (lhs.size() != rhs.size()) return false;
+    for (size_t i = 0; i < lhs.size(); ++i) {
+        if (lhs[i] != rhs[i]) return false;
+    }
+    return true;
+}
+
+std::istream& operator>>(std::istream& is, string& x) {
+    // delete original string
+    x = string();
+
+    while (!is.eof()) {
+        char ch = is.get();
+        if (ch == ' ' || ch == '\n' || ch == '\0') break;
+
+        x += ch;
+    }
+
+    return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const string& x) {
+    return os << x.m_str;
+}
+
 string to_string(const int x) {
     char buff[12];
     sprintf(buff, "%d", x);

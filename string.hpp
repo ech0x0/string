@@ -2,6 +2,9 @@
 #ifndef STRING_HPP
 #define STRING_HPP
 
+#include <istream>
+#include <ostream>
+
 class string {
 private:
     char* m_str;
@@ -53,6 +56,14 @@ public:
     friend string operator+(string&& lhs, const char rhs);
     friend string operator+(const char lhs, const string& rhs);
     friend string operator+(const char lhs, string&& rhs);
+
+    friend bool operator<(const string& lhs, const string& rhs);
+    friend bool operator==(const string lhs, const string& rhs);
+
+    char operator[](const size_t i) const;
+
+    friend std::istream& operator>>(std::istream& is, string& x);
+    friend std::ostream& operator<<(std::ostream& os, const string& x);
 };
 
 string to_string(const int x);
